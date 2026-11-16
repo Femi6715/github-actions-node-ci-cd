@@ -29,6 +29,8 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+      - name: Lowercase image owner
+        run: echo "OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -40,4 +42,4 @@ jobs:
         with:
           context: ./app
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/node-app:latest
+          tags: ghcr.io/${{ env.OWNER }}/node-app:latest
